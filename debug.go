@@ -39,8 +39,8 @@ type (
 		Stem   []byte   `json:"stem"`
 		Values [][]byte `json:"values"`
 
-		C  [32]byte `json:"commitment"`
-		C1 [32]byte `json:"c1"`
-		C2 [32]byte `json:"c2"`
+		C  []byte `json:"commitment"`
+		C1 []byte `json:"c1"`
+		C2 []byte `json:"c2"`
 	}
 )

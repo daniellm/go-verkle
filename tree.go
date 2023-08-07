@@ -200,11 +200,25 @@ func (n *InternalNode) toExportable() *ExportableInternalNode {
 		case *InternalNode:
 			exportable.Children[i] = child.toExportable()
 		case *LeafNode:
+
+			bytes1 := child.commitment.Bytes()
+			tmp1 := make([]byte, 32)
+			copy(tmp1, bytes1[0:])
+
+			bytes2 := child.c1.Bytes()
+			tmp2 := make([]byte, 32)
+			copy(tmp2, bytes2[0:])
+
+			bytes3 := child.c2.Bytes()
+			tmp3 := make([]byte, 32)
+			copy(tmp3, bytes3[0:])
+
 			exportable.Children[i] = &ExportableLeafNode{
 				Stem:   child.stem,
 				Values: child.values,
-				C:      child.commitment.Bytes(),
-				C1:     child.c1.Bytes(),
+				C:      tmp1,
+				C1:     tmp2,
+				C2:     tmp3,
 			}
 		default:
 			panic("unexportable type")
@@ -215,7 +229,7 @@ func (n *InternalNode) toExportable() *ExportableInternalNode {
 
 // Turn an internal node into a JSON string
 func (n *InternalNode) ToJSON() ([]byte, error) {
-	return json.Marshal(n.toExportable())
+	return json.MarshalIndent(n.toExportable(), "", "    ")
 }
 
 func newInternalNode(depth byte) VerkleNode {
