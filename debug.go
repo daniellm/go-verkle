@@ -32,15 +32,15 @@ type (
 	ExportableInternalNode struct {
 		Children []interface{} `json:"children"`
 
-		Commitment []byte `json:"commitment"`
+		Commitment string `json:"commitment"`
 	}
 
 	ExportableLeafNode struct {
-		Stem   []byte   `json:"stem"`
+		Stem   string   `json:"stem"`
 		Values [][]byte `json:"values"`
 
-		C  []byte `json:"commitment"`
-		C1 []byte `json:"c1"`
-		C2 []byte `json:"c2"`
+		Commitment string `json:"commitment"`
+		C1         string `json:"c1"`
+		C2         string `json:"c2"`
 	}
 )

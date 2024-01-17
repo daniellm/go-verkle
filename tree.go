@@ -27,6 +27,7 @@ package verkle
 
 import (
 	"bytes"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -188,7 +189,7 @@ func (n *InternalNode) toExportable() *ExportableInternalNode {
 	comm := n.commitment.Bytes()
 	exportable := &ExportableInternalNode{
 		Children:   make([]interface{}, NodeWidth),
-		Commitment: comm[:],
+		Commitment: hex.EncodeToString(comm[:]),
 	}
 
 	for i := range exportable.Children {
@@ -202,23 +203,15 @@ func (n *InternalNode) toExportable() *ExportableInternalNode {
 		case *LeafNode:
 
 			bytes1 := child.commitment.Bytes()
-			tmp1 := make([]byte, 32)
-			copy(tmp1, bytes1[0:])
-
 			bytes2 := child.c1.Bytes()
-			tmp2 := make([]byte, 32)
-			copy(tmp2, bytes2[0:])
-
 			bytes3 := child.c2.Bytes()
-			tmp3 := make([]byte, 32)
-			copy(tmp3, bytes3[0:])
 
 			exportable.Children[i] = &ExportableLeafNode{
-				Stem:   child.stem,
-				Values: child.values,
-				C:      tmp1,
-				C1:     tmp2,
-				C2:     tmp3,
+				Stem:       hex.EncodeToString(child.stem),
+				Values:     child.values,
+				Commitment: hex.EncodeToString(bytes1[:]),
+				C1:         hex.EncodeToString(bytes2[:]),
+				C2:         hex.EncodeToString(bytes3[:]),
 			}
 		default:
 			panic("unexportable type")
