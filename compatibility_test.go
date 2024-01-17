@@ -83,7 +83,7 @@ func TestCompatibility(t *testing.T) {
 	bytes, _ := tree.ToJSON()
 	text := string(bytes)
 
-	file, err := os.Create("compatibility1.json")
+	file, err := os.Create("testResults/compatibility1.json")
 	if err != nil {
 		panic(err)
 	}
@@ -122,7 +122,7 @@ func TestCompatibility(t *testing.T) {
 	bytes, _ = tree.ToJSON()
 	text = string(bytes)
 
-	file, err = os.Create("compatibility2.after-update.json")
+	file, err = os.Create("testResults/compatibility2.after-update.json")
 	if err != nil {
 		panic(err)
 	}
@@ -149,7 +149,7 @@ func TestCompatibility(t *testing.T) {
 	bytes, _ = tree.ToJSON()
 	text = string(bytes)
 
-	file, err = os.Create("compatibility3.after-delete.json")
+	file, err = os.Create("testResults/compatibility3.after-delete.json")
 	if err != nil {
 		panic(err)
 	}
